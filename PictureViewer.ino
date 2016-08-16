@@ -2,7 +2,6 @@
 
     By GK Grotsky
     8/14/16
-    Version 1.0
 */
 #include "PictureViewer.h"
 #include <Adafruit_GFX.h>    // Core graphics library
@@ -47,7 +46,9 @@ void setup(void) {
   }
   root.close();
 
-  // Print # of files
+  // Print version and # of files
+  Serial.print("Version ");
+  Serial.println(VERSION);
   Serial.print("Number of files = ");
   Serial.println(numberOfFiles);
   Serial.print("Mode = ");
@@ -176,7 +177,8 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
         Serial.print("Image size: ");
         Serial.print(bmpWidth);
         Serial.print('x');
-        Serial.println(bmpHeight);
+        Serial.print(bmpHeight);
+        Serial.println(" Pixels");
 
         // BMP rows are padded (if needed) to 4-byte boundary
         rowSize = (bmpWidth * 3 + 3) & ~3;
@@ -287,6 +289,9 @@ void displaySplashScreen(displayModeEnum displayMode) {
   }
   tft.setTextColor(ST7735_CYAN);
   tft.setTextSize(1);
+  tft.setCursor(30, 130);
+  tft.print("Version ");
+  tft.println(VERSION);
   if (SD_OK) {
     tft.setCursor(30, 140);
     tft.print("# of files ");
