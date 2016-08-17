@@ -176,8 +176,10 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
         goodBmp = true; // Supported BMP format -- proceed!
         Serial.print("Image size: ");
         Serial.print(bmpWidth);
-        Serial.print('x');
+        Serial.print("W ");
+        Serial.print("x ");
         Serial.print(bmpHeight);
+        Serial.print('H');
         Serial.println(" Pixels");
 
         // BMP rows are padded (if needed) to 4-byte boundary
@@ -275,6 +277,11 @@ void displaySplashScreen(displayModeEnum displayMode) {
   tft.println("Picture");
   tft.setCursor(15, 20);
   tft.println("Viewer");
+  tft.setTextSize(1);
+  tft.setCursor(20, 40);
+  tft.print("Version ");
+  tft.println(VERSION);
+  tft.setTextSize(2);
   tft.println("");
   tft.setTextColor(ST7735_BLUE);
   tft.println("GK Grotsky");
@@ -289,9 +296,6 @@ void displaySplashScreen(displayModeEnum displayMode) {
   }
   tft.setTextColor(ST7735_CYAN);
   tft.setTextSize(1);
-  tft.setCursor(30, 130);
-  tft.print("Version ");
-  tft.println(VERSION);
   if (SD_OK) {
     tft.setCursor(30, 140);
     tft.print("# of files ");
