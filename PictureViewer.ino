@@ -21,6 +21,11 @@ void setup(void) {
   Serial.begin(9600);
   tft.initR(INITR_BLACKTAB);
 
+  // Print program name nad version
+  Serial.println("Picture Viewer");
+  Serial.print("Version ");
+  Serial.println(VERSION);
+  
   // Initialize the SD card
   Serial.print("Initializing SD card...");
   if (!SD.begin(SD_CS)) {
@@ -46,9 +51,7 @@ void setup(void) {
   }
   root.close();
 
-  // Print version and # of files
-  Serial.print("Version ");
-  Serial.println(VERSION);
+  // Print # of files and mode
   Serial.print("Number of files = ");
   Serial.println(numberOfFiles);
   Serial.print("Mode = ");
