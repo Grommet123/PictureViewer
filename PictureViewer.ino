@@ -137,7 +137,7 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
   boolean  flip    = true;        // BMP is stored bottom-to-top
   int      w, h, row, col;
   uint8_t  r, g, b;
-  uint32_t pos = 0, startTime = millis();
+  uint32_t pos = 0;
 
   if ((x >= tft.width()) || (y >= tft.height())) return;
 
@@ -152,7 +152,6 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
     displayFileName(filename, false);
     return (false);
   }
-  displayFileName(filename);
 
   // Parse BMP header
   if (read16(bmpFile) == 0x4D42) { // BMP signature
@@ -181,6 +180,8 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
         Serial.print(bmpHeight);
         Serial.print('H');
         Serial.println(" Pixels");
+
+        displayFileName(filename, true, bmpWidth, bmpHeight);
 
         // BMP rows are padded (if needed) to 4-byte boundary
         rowSize = (bmpWidth * 3 + 3) & ~3;
@@ -232,9 +233,6 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
             tft.pushColor(tft.Color565(r, g, b));
           } // end pixel
         } // end scanline
-        Serial.print("Loaded in ");
-        Serial.print(millis() - startTime);
-        Serial.println(" ms");
       } // end goodBmp
     }
   }
@@ -311,7 +309,7 @@ void displaySplashScreen(displayModeEnum displayMode) {
 }
 
 // Displays the file name
-void displayFileName(char *fileName, boolean fileFound) {
+void displayFileName(char *fileName, boolean fileFound, int bmpWidth, int bmpHeight) {
   static long lastRandomNumber;
   long randomColor;
   unsigned int textColor[] = {
@@ -348,14 +346,24 @@ void displayFileName(char *fileName, boolean fileFound) {
   tft.println("File Name:");
   tft.setCursor(10, 80);
   tft.println(fileName);
-  tft.setCursor(15, 120);
+  tft.setTextSize(1);
   if (!fileFound) {
-    tft.setTextSize(1);
+    tft.setCursor(15, 110);
     tft.println("File not found");
   }
-  tft.setCursor(75, 150);
-  tft.setTextSize(1);
+  else {
+    tft.setCursor(10, 110);
+    tft.println("File Size: ");
+    tft.setCursor(10, 120);
+    tft.print(bmpWidth);
+    tft.print("W ");
+    tft.print("x ");
+    tft.print(bmpHeight);
+    tft.print('H');
+    tft.println(" Pixels");
+  }
+  tft.setCursor(50, 150);
   tft.println(colorType[randomColor]);
-  delay(3000);
+  delay(5000);
   tft.fillScreen(ST7735_BLACK);
 }
