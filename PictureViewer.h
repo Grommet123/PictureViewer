@@ -33,7 +33,7 @@ from 1 to 99.
  ** DC -   Pin 9  on Arduino Uno/Duemilanove/Diecimila
  ** CS -   Pin 10 on Arduino Uno/Duemilanove/Diecimila 
 */
-#define VERSION  "1.2"        // Version number
+#define VERSION  "2.0"        // Version number
 #define TFT_CS  10            // Chip select line for TFT display
 #define TFT_DC   9            // Data/command line for TFT
 #define TFT_RST  8            // Reset line for TFT
@@ -52,6 +52,6 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y);
 uint16_t read16(File f);
 uint32_t read32(File f);
 void displaySplashScreen(displayModeEnum displayMode = NonTest);
-void displayFileName(char *fileName, boolean fileFound = true);
+void displayFileName(char *fileName, boolean fileFound = true, int bmpWidth = 0, int bmpHeight = 0);
 
 #endif  // #define PictureViewer_h
