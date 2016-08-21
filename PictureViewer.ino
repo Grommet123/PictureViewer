@@ -11,6 +11,7 @@ Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
 int numberOfFiles = 0;
 int pastMode = HIGH;
+int pastTest = HIGH;
 boolean SD_OK = false;
 
 // The setup (runs once at start up)
@@ -58,29 +59,28 @@ void setup(void) {
     Serial.println('1');
   }
   else {
-      Serial.println(numberOfFiles);
+    Serial.println(numberOfFiles);
   }
 
-tft.setRotation(0); // Portrait
+  tft.setRotation(0); // Portrait
 
-// Seed random number generator
-randomSeed(analogRead(A0));
+  // Seed random number generator
+  randomSeed(analogRead(A0));
 
-// Display splash screen
-if (digitalRead(TEST_PIN) == LOW) {
-  Serial.print("Mode = ");
-  Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
-  Serial.println();
-  displaySplashScreen();
-}
-else {
-  Serial.print("Mode = ");
-  Serial.println("TEST");
-  Serial.println();
-  numberOfFiles = 1;
-  displaySplashScreen(Test);
-}
-pastMode = digitalRead(MODE_PIN);
+  // Display splash screen
+  if (digitalRead(TEST_PIN) == LOW) {
+    Serial.print("Mode = ");
+    Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
+    Serial.println();
+    displaySplashScreen();
+  }
+  else {
+    Serial.print("Mode = ");
+    Serial.println("TEST");
+    Serial.println();
+    displaySplashScreen(Test);
+  }
+  pastMode = digitalRead(MODE_PIN);
 }
 
 // The loop (runs forever)
@@ -94,13 +94,14 @@ void loop() {
 
   if (digitalRead(TEST_PIN) == LOW) {  // Used for debugging
     // Check if the mode switch has changed
-    if (digitalRead(MODE_PIN) != pastMode) {
+    if ((digitalRead(MODE_PIN) != pastMode) || (digitalRead(TEST_PIN) != pastTest)) {
       Serial.print("Mode = ");
       Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
       Serial.println();
       // Display splash screen
       displaySplashScreen();
       pastMode = digitalRead(MODE_PIN);
+      pastTest = digitalRead(TEST_PIN);
     }
     // Check fo mode
     if (digitalRead(MODE_PIN) == HIGH) {
@@ -132,6 +133,11 @@ void loop() {
     }
   }
   else { // Uesd to debug a bmp file
+    if (digitalRead(TEST_PIN) != pastTest) {
+      displaySplashScreen(Test);
+      fileNumber = 1;
+      pastTest = digitalRead(TEST_PIN);
+    }
     if (bmpDraw(TESTPICTURE, 0, 0)) delay(DELAY_TIME);
   }
 }
