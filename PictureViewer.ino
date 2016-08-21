@@ -17,6 +17,7 @@ boolean SD_OK = false;
 void setup(void) {
   File root, entry;
 
+  pinMode(TEST_PIN, INPUT);
   pinMode(MODE_PIN, INPUT);
   Serial.begin(9600);
   tft.initR(INITR_BLACKTAB);
@@ -25,7 +26,7 @@ void setup(void) {
   Serial.println("Picture Viewer");
   Serial.print("Version ");
   Serial.println(VERSION);
-  
+
   // Initialize the SD card
   Serial.print("Initializing SD card...");
   if (!SD.begin(SD_CS)) {
@@ -53,24 +54,33 @@ void setup(void) {
 
   // Print # of files and mode
   Serial.print("Number of files = ");
-  Serial.println(numberOfFiles);
+  if ((digitalRead(TEST_PIN) == HIGH)) {
+    Serial.println('1');
+  }
+  else {
+      Serial.println(numberOfFiles);
+  }
+
+tft.setRotation(0); // Portrait
+
+// Seed random number generator
+randomSeed(analogRead(A0));
+
+// Display splash screen
+if (digitalRead(TEST_PIN) == LOW) {
   Serial.print("Mode = ");
   Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
   Serial.println();
-
-  tft.setRotation(0); // Portrait
-
-  // Seed random number generator
-  randomSeed(analogRead(A0));
-
-  // Display splash screen
-#ifdef DRAW_ALL
   displaySplashScreen();
-#else
+}
+else {
+  Serial.print("Mode = ");
+  Serial.println("TEST");
+  Serial.println();
   numberOfFiles = 1;
   displaySplashScreen(Test);
-#endif
-  pastMode = digitalRead(MODE_PIN);
+}
+pastMode = digitalRead(MODE_PIN);
 }
 
 // The loop (runs forever)
@@ -82,47 +92,48 @@ void loop() {
   static long lastRandomNumber = 0;
   static int fileNumber = 1;
 
-#ifdef DRAW_ALL  // Used for debugging
-  // Check if the mode switch has changed
-  if (digitalRead(MODE_PIN) != pastMode) {
-    Serial.print("Mode = ");
-    Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
-    Serial.println();
-    // Display splash screen
-    displaySplashScreen();
-    pastMode = digitalRead(MODE_PIN);
-  }
-  // Check fo mode
-  if (digitalRead(MODE_PIN) == HIGH) {
-    // Random was selected, get random number
-    long randNumber = random(1, numberOfFiles + 1);
-    // If random number repeats, try again
-    while (randNumber == lastRandomNumber) {
-      randNumber = random(1, numberOfFiles + 1);
+  if (digitalRead(TEST_PIN) == LOW) {  // Used for debugging
+    // Check if the mode switch has changed
+    if (digitalRead(MODE_PIN) != pastMode) {
+      Serial.print("Mode = ");
+      Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
+      Serial.println();
+      // Display splash screen
+      displaySplashScreen();
+      pastMode = digitalRead(MODE_PIN);
     }
-    lastRandomNumber = randNumber;
-    // Convert it to a string
-    sprintf(randomNumberChar, "%d", randNumber);
-    strncat(fileName, randomNumberChar, 3);
-    strncat(fileName, ".bmp", 4);
-    if (bmpDraw(fileName, 0, 0)) {
-      delay(DELAY_TIME);
-      fileNumber = 1;
+    // Check fo mode
+    if (digitalRead(MODE_PIN) == HIGH) {
+      // Random was selected, get random number
+      long randNumber = random(1, numberOfFiles + 1);
+      // If random number repeats, try again
+      while (randNumber == lastRandomNumber) {
+        randNumber = random(1, numberOfFiles + 1);
+      }
+      lastRandomNumber = randNumber;
+      // Convert it to a string
+      sprintf(randomNumberChar, "%d", randNumber);
+      strncat(fileName, randomNumberChar, 3);
+      strncat(fileName, ".bmp", 4);
+      if (bmpDraw(fileName, 0, 0)) {
+        delay(DELAY_TIME);
+        fileNumber = 1;
+      }
+    }
+    // Sequential was selected, dislpay files from begining to end
+    else {
+      // Convert list of files to a string
+      sprintf(listNumberChar, "%d", fileNumber);
+      strncat(fileName, listNumberChar, 3);
+      strncat(fileName, ".bmp", 4);
+      if (bmpDraw(fileName, 0, 0)) delay(DELAY_TIME);
+      fileNumber++;
+      if (fileNumber > numberOfFiles) fileNumber = 1;
     }
   }
-  // Sequential was selected, dislpay files from begining to end
-  else {
-    // Convert list of files to a string
-    sprintf(listNumberChar, "%d", fileNumber);
-    strncat(fileName, listNumberChar, 3);
-    strncat(fileName, ".bmp", 4);
-    if (bmpDraw(fileName, 0, 0)) delay(DELAY_TIME);
-    fileNumber++;
-    if (fileNumber > numberOfFiles) fileNumber = 1;
+  else { // Uesd to debug a bmp file
+    if (bmpDraw(TESTPICTURE, 0, 0)) delay(DELAY_TIME);
   }
-#else // Uesd to debug a bmp file
-  if (bmpDraw(TESTPICTURE, 0, 0)) delay(DELAY_TIME);
-#endif
 }
 
 #define BUFFPIXEL 20
