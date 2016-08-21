@@ -33,15 +33,15 @@ from 1 to 99.
  ** DC -   Pin 9  on Arduino Uno/Duemilanove/Diecimila
  ** CS -   Pin 10 on Arduino Uno/Duemilanove/Diecimila 
 */
-#define VERSION  "2.1"        // Version number
+#define VERSION  "3.0"        // Version number
 #define TFT_CS  10            // Chip select line for TFT display
 #define TFT_DC   9            // Data/command line for TFT
 #define TFT_RST  8            // Reset line for TFT
 #define SD_CS    4            // Chip select line for SD card
+#define TEST_PIN 5            // Test select switch
 #define MODE_PIN 6            // Mode select switch
 #define DELAY_TIME 5000       // Delay time between pictures
-#define DRAW_ALL              // Comment out for picture debugging
-#define TESTPICTURE "pic1.bmp" // Test picture for debugging
+#define TESTPICTURE "pic14.bmp" // Test picture for debugging
 
 enum displayModeEnum {
   Test,
