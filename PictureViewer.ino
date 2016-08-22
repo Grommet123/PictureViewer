@@ -72,18 +72,18 @@ void setup(void) {
     Serial.print("Mode = ");
     Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
     Serial.println();
-    displaySplashScreen();
+    pastMode = !(digitalRead(MODE_PIN));
   }
   else {
     Serial.print("Mode = ");
     Serial.println("TEST");
     Serial.println();
-    displaySplashScreen(Test);
+    pastTest = !(digitalRead(TEST_PIN));
   }
   pastMode = digitalRead(MODE_PIN);
-}
+}  // setup
 
-// The loop (runs forever)
+// The loop (runs forever and a day :-))
 void loop() {
 
   char fileName[] = "pic";
@@ -140,12 +140,9 @@ void loop() {
     }
     if (bmpDraw(TESTPICTURE, 0, 0)) delay(DELAY_TIME);
   }
-}
-
-#define BUFFPIXEL 20
+}  // loop
 
 boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
-
   File     bmpFile;
   int      bmpWidth, bmpHeight;   // W+H in pixels
   uint8_t  bmpDepth;              // Bit depth (currently must be 24)
@@ -263,7 +260,7 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
     return (false);
   }
   return (true);
-}
+}  // bmpDraw
 
 // These read 16- and 32-bit types from the SD card file.
 // BMP data is stored little-endian, Arduino is little-endian too.
