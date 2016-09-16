@@ -33,7 +33,7 @@ from 1 to 99.
  ** DC -   Pin 9  on Arduino Uno/Duemilanove/Diecimila
  ** CS -   Pin 10 on Arduino Uno/Duemilanove/Diecimila 
 */
-#define VERSION  "3.2"        // Version number
+#define VERSION  "4.0"        // Version number
 #define TFT_CS  10            // Chip select line for TFT display
 #define TFT_DC   9            // Data/command line for TFT
 #define TFT_RST  8            // Reset line for TFT
