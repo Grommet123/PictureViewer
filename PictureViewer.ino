@@ -357,8 +357,21 @@ void displayFileName(char *fileName, boolean fileFound, int bmpWidth, int bmpHei
   lastRandomNumber = randomColor;
   tft.setTextWrap(false);
   tft.fillScreen(ST7735_BLACK);
-  tft.setCursor(0, 50);
   tft.setTextColor(textColor[randomColor]);
+  tft.setTextSize(1);
+  if (digitalRead(TEST_PIN)) {
+    tft.setCursor(50, 0);
+    tft.println("Test");
+  }
+  else if (digitalRead(MODE_PIN)) {
+    tft.setCursor(40, 0);
+    tft.println("Random");
+  }
+  else {
+    tft.setCursor(30, 0);
+    tft.println("Sequential");
+  }
+  tft.setCursor(0, 50);
   tft.setTextSize(2);
   tft.println("File Name:");
   tft.setCursor(10, 80);
