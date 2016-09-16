@@ -359,17 +359,19 @@ void displayFileName(char *fileName, boolean fileFound, int bmpWidth, int bmpHei
   tft.fillScreen(ST7735_BLACK);
   tft.setTextColor(textColor[randomColor]);
   tft.setTextSize(1);
-  if (digitalRead(TEST_PIN)) {
+  if (!digitalRead(TEST_PIN)) {
+    if (digitalRead(MODE_PIN)) { // Not test mode
+      tft.setCursor(40, 0);
+      tft.println("Random");
+    }
+    else {
+      tft.setCursor(30, 0);
+      tft.println("Sequential");
+    }
+  } // Test mode
+  else {
     tft.setCursor(50, 0);
     tft.println("Test");
-  }
-  else if (digitalRead(MODE_PIN)) {
-    tft.setCursor(40, 0);
-    tft.println("Random");
-  }
-  else {
-    tft.setCursor(30, 0);
-    tft.println("Sequential");
   }
   tft.setCursor(0, 50);
   tft.setTextSize(2);
