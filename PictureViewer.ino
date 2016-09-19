@@ -12,7 +12,7 @@ Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 int numberOfFiles = 0;
 int pastMode = HIGH;
 int pastTest = HIGH;
-boolean SD_OK = false;
+bool SD_OK = false;
 
 // The setup (runs once at start up)
 void setup(void) {
@@ -23,7 +23,7 @@ void setup(void) {
   Serial.begin(9600);
   tft.initR(INITR_BLACKTAB);
 
-  // Print program name nad version
+  // Print program name and version
   Serial.println("Picture Viewer");
   Serial.print("Version ");
   Serial.println(VERSION);
@@ -48,7 +48,9 @@ void setup(void) {
       break;
     }
     // Do not count any non-picxx.bmp files
-    if ((strncmp(entry.name(), "PIC", 3) == 0)) numberOfFiles++;
+    if ((strncmp(entry.name(), "PIC", 3) == 0)) {
+      numberOfFiles++;
+    }
     entry.close();
   }
   root.close();
@@ -67,7 +69,6 @@ void setup(void) {
   // Seed random number generator
   randomSeed(analogRead(A0));
 
-  // Display splash screen
   if (digitalRead(TEST_PIN) == LOW) {
     Serial.print("Mode = ");
     Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
@@ -142,7 +143,7 @@ void loop() {
   }
 }  // loop
 
-boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
+bool bmpDraw(char *filename, uint8_t x, uint8_t y) {
   File     bmpFile;
   int      bmpWidth, bmpHeight;   // W+H in pixels
   uint8_t  bmpDepth;              // Bit depth (currently must be 24)
@@ -150,8 +151,8 @@ boolean bmpDraw(char *filename, uint8_t x, uint8_t y) {
   uint32_t rowSize;               // Not always = bmpWidth; may have padding
   uint8_t  sdbuffer[3 * BUFFPIXEL]; // pixel buffer (R+G+B per pixel)
   uint8_t  buffidx = sizeof(sdbuffer); // Current position in sdbuffer
-  boolean  goodBmp = false;       // Set to true on valid header parse
-  boolean  flip    = true;        // BMP is stored bottom-to-top
+  bool     goodBmp = false;       // Set to true on valid header parse
+  bool     flip    = true;        // BMP is stored bottom-to-top
   int      w, h, row, col;
   uint8_t  r, g, b;
   uint32_t pos = 0;
@@ -326,7 +327,7 @@ void displaySplashScreen(displayModeEnum displayMode) {
 }
 
 // Displays the file name
-void displayFileName(char *fileName, boolean fileFound, int bmpWidth, int bmpHeight) {
+void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight) {
   static long lastRandomNumber;
   long randomColor;
   unsigned int textColor[] = {
@@ -361,7 +362,7 @@ void displayFileName(char *fileName, boolean fileFound, int bmpWidth, int bmpHei
   tft.setTextSize(1);
   if (!digitalRead(TEST_PIN)) {
     if (digitalRead(MODE_PIN)) { // Not test mode
-      tft.setCursor(40, 0);
+      tft.setCursor(45, 0);
       tft.println("Random");
     }
     else {
