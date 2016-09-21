@@ -63,7 +63,7 @@ void setup(void) {
       themeField += (char)tempByte; // Store byte for displayFileName
     }
     themeName.close();
-  } // if ((themeName = SD.open("theme.txt", FILE_READ)) != NULL)
+  }
 
   // Print # of files and mode
   Serial.print("Number of files = ");
@@ -273,7 +273,7 @@ bool bmpDraw(char *filename, uint8_t x, uint8_t y) {
   return (true);
 }  // bmpDraw
 
-// These read 16-,32-bit and 8- types from the SD card file.
+// These read 16-, 32-bit and 8- types from the SD card file.
 // BMP data is stored little-endian, Arduino is little-endian too.
 // May need to reverse subscript order if porting elsewhere.
 
@@ -346,6 +346,7 @@ void displaySplashScreen(displayModeEnum displayMode) {
 void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight) {
   static long lastRandomNumber;
   long randomColor;
+  byte maxLeghtOfTheme;
   unsigned int textColor[] = {
     ST7735_BLUE,
     ST7735_RED,
@@ -392,7 +393,8 @@ void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight
   }
   tft.setCursor(0, 15);
   tft.println("Theme:");
-  tft.setCursor(0, 25);
+  maxLeghtOfTheme = min(themeField.length(), MAXTHEMELENGTH);
+  tft.setCursor((HALFTHEMELENGTH - (maxLeghtOfTheme / 2)) * LCDWIDTHOFFSET, 25);
   tft.println(themeField);
   tft.setCursor(0, 50);
   tft.setTextSize(2);
