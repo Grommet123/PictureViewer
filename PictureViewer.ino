@@ -391,6 +391,8 @@ void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight
     tft.println("Test");
   }
   tft.setCursor(0, 15);
+  tft.println("Theme:");
+  tft.setCursor(0, 25);
   tft.println(themeField);
   tft.setCursor(0, 50);
   tft.setTextSize(2);
