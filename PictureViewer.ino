@@ -13,10 +13,11 @@ int numberOfFiles = 0;
 int pastMode = HIGH;
 int pastTest = HIGH;
 bool SD_OK = false;
+String themeField;
 
 // The setup (runs once at start up)
 void setup(void) {
-  File root, entry;
+  File root, entry, themeName;
 
   pinMode(TEST_PIN, INPUT);
   pinMode(MODE_PIN, INPUT);
@@ -54,6 +55,15 @@ void setup(void) {
     entry.close();
   }
   root.close();
+
+  // Get and store the pictures theme
+  if ((themeName = SD.open("theme.txt", FILE_READ)) != NULL) {
+    while (themeName.available()) {
+      uint8_t tempByte = read8(themeName); // Reads one byte
+      themeField += (char)tempByte; // Store byte for displayFileName
+    }
+    themeName.close();
+  } // if ((themeName = SD.open("theme.txt", FILE_READ)) != NULL)
 
   // Print # of files and mode
   Serial.print("Number of files = ");
@@ -263,9 +273,15 @@ bool bmpDraw(char *filename, uint8_t x, uint8_t y) {
   return (true);
 }  // bmpDraw
 
-// These read 16- and 32-bit types from the SD card file.
+// These read 16-,32-bit and 8- types from the SD card file.
 // BMP data is stored little-endian, Arduino is little-endian too.
 // May need to reverse subscript order if porting elsewhere.
+
+uint8_t read8(File f) {
+  uint8_t result;
+  ((uint8_t *)&result)[0] = f.read();
+  return result;
+}
 
 uint16_t read16(File f) {
   uint16_t result;
@@ -326,7 +342,7 @@ void displaySplashScreen(displayModeEnum displayMode) {
   delay(10000);
 }
 
-// Displays the file name
+// Displays the file name among other things
 void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight) {
   static long lastRandomNumber;
   long randomColor;
@@ -374,6 +390,8 @@ void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight
     tft.setCursor(50, 0);
     tft.println("Test");
   }
+  tft.setCursor(0, 15);
+  tft.println(themeField);
   tft.setCursor(0, 50);
   tft.setTextSize(2);
   tft.println("File Name:");
