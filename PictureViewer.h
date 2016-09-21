@@ -33,7 +33,7 @@ from 1 to 99.
  ** DC -   Pin 9
  ** CS -   Pin 10
 */
-#define VERSION  "5.0"        // Version number
+#define VERSION  "5.1"        // Version number
 #define TFT_CS  10            // Chip select line for TFT display
 #define TFT_DC   9            // Data/command line for TFT
 #define TFT_RST  8            // Reset line for TFT
@@ -43,12 +43,14 @@ from 1 to 99.
 #define DELAY_TIME 5 * 1000   // Delay time between pictures (seconds)
 #define TESTPICTURE "pic14.bmp" // Test picture for debugging
 #define BUFFPIXEL 20
+
 enum displayModeEnum {
   Test,
   NonTest
 };
 
 bool bmpDraw(char *filename, uint8_t x, uint8_t y);
+uint8_t read8(File f);
 uint16_t read16(File f);
 uint32_t read32(File f);
 void displaySplashScreen(displayModeEnum displayMode = NonTest);
