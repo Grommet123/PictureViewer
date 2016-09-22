@@ -64,6 +64,9 @@ void setup(void) {
     }
     themeName.close();
   }
+  else { // No theme file, so set theme field to "?"
+    themeField = "??????";
+  }
 
   // Print # of files and mode
   Serial.print("Number of files = ");
