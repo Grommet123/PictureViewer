@@ -282,7 +282,7 @@ bool bmpDraw(char *filename, uint8_t x, uint8_t y) {
 
 uint8_t read8(File f) {
   uint8_t result;
-  ((uint8_t *)&result)[0] = f.read();
+  ((uint8_t *)&result)[0] = f.read(); // One byte
   return result;
 }
 
@@ -302,7 +302,7 @@ uint32_t read32(File f) {
   return result;
 }
 
-// Displays the splach screen
+// Displays the splash screen
 void displaySplashScreen(displayModeEnum displayMode) {
   tft.setTextWrap(false);
   tft.fillScreen(ST7735_BLACK);
@@ -396,7 +396,8 @@ void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight
   }
   tft.setCursor(0, 15);
   tft.println("Theme:");
-  maxLeghtOfTheme = min(themeField.length(), MAXTHEMELENGTH);
+  // Center the theme
+  maxLeghtOfTheme = min(themeField.length(), MAXTHEMELENGTH); // Limit characters
   tft.setCursor((HALFTHEMELENGTH - (maxLeghtOfTheme / 2)) * LCDWIDTHOFFSET, 25);
   tft.println(themeField);
   tft.setCursor(0, 50);
