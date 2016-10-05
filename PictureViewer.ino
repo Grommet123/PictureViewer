@@ -400,10 +400,8 @@ void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight
   maxLeghtOfTheme = min(themeField.length(), MAXTHEMELENGTH); // Limit characters
   tft.setCursor((HALFTHEMELENGTH - (maxLeghtOfTheme / 2)) * LCDWIDTHOFFSET, 25);
   tft.println(themeField);
-  tft.setCursor(0, 50);
   tft.setTextSize(2);
-  tft.println("File Name:");
-  tft.setCursor(10, 80);
+  tft.setCursor(10, 50);
   tft.println(fileName);
   tft.setTextSize(1);
   if (!fileFound) {
