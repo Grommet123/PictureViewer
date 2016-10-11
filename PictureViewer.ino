@@ -332,8 +332,8 @@ void displaySplashScreen(displayModeEnum displayMode) {
   tft.setTextColor(ST7735_CYAN);
   tft.setTextSize(1);
   if (SD_OK) {
-    tft.setCursor(30, 140);
-    tft.print("# of files ");
+    tft.setCursor(15, 140);
+    tft.print("# of pictures ");
     tft.println(numberOfFiles);
     tft.setCursor(30, 150);
     tft.println("SD Card OK");
