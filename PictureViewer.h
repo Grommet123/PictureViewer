@@ -35,7 +35,7 @@ Note: The picture file names must have the format picxx.bmp, where xx is a numbe
  ** DC -   Pin 9
  ** CS -   Pin 10
 */
-#define VERSION  "5.5"        // Version number
+#define VERSION  "5.6"        // Version number
 #define TFT_CS  10            // Chip select line for TFT display
 #define TFT_DC   9            // Data/command line for TFT
 #define TFT_RST  8            // Reset line for TFT
@@ -43,7 +43,7 @@ Note: The picture file names must have the format picxx.bmp, where xx is a numbe
 #define TEST_PIN 5            // Test select switch
 #define MODE_PIN 6            // Mode select switch
 #define DELAY_TIME 5 * 1000   // Delay time between pictures (seconds)
-#define TESTPICTURE "pic14.bmp" // Test picture for debugging
+#define TESTPICTURE "pic19.bmp" // Test picture for debugging
 #define MAXTHEMELENGTH 22      // maximum lenght of the theme on the LCD
 #define HALFTHEMELENGTH MAXTHEMELENGTH / 2 // Half of maximum lenght of the theme
 #define LCDWIDTHOFFSET 4       // LCD width offset (in pixels)
