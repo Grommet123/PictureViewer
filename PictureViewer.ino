@@ -2,6 +2,7 @@
 
     By GK Grotsky
     8/14/16
+
 */
 #include "PictureViewer.h"
 #include <Adafruit_GFX.h>    // Core graphics library
