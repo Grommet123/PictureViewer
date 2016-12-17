@@ -35,6 +35,8 @@ void setup(void) {
   if (!SD.begin(SD_CS)) {
     Serial.println("failed!");
     SD_OK = false;
+    numberOfFiles = 99;
+    themeField = "??????";
     displaySplashScreen();
     return;
   }
@@ -213,7 +215,7 @@ bool bmpDraw(char *filename, uint8_t x, uint8_t y) {
         Serial.print('H');
         Serial.println(" Pixels");
 
-        displayFileName(filename, true, bmpWidth, bmpHeight);
+        displayFileName(filename, true, bmpWidth, bmpHeight, numberOfFiles);
 
         // BMP rows are padded (if needed) to 4-byte boundary
         rowSize = (bmpWidth * 3 + 3) & ~3;
@@ -347,7 +349,8 @@ void displaySplashScreen(displayModeEnum displayMode) {
 }
 
 // Displays the file name among other things
-void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight) {
+void displayFileName(char *fileName, bool fileFound = true, 
+                     int bmpWidth = 0, int bmpHeight = 0, int numberOfFiles = 99) {
   static long lastRandomNumber;
   long randomColor;
   byte maxLeghtOfTheme;
@@ -405,6 +408,9 @@ void displayFileName(char *fileName, bool fileFound, int bmpWidth, int bmpHeight
   tft.setCursor(10, 50);
   tft.println(fileName);
   tft.setTextSize(1);
+  tft.setCursor(50, 70);
+  tft.print("of ");
+  tft.println(numberOfFiles);
   if (!fileFound) {
     tft.setCursor(15, 110);
     tft.println("File not found");
