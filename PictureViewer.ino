@@ -307,6 +307,8 @@ uint32_t read32(File f) {
 
 // Displays the splash screen
 void displaySplashScreen(displayModeEnum displayMode) {
+  byte maxLeghtOfTheme;
+
   tft.setTextWrap(false);
   tft.fillScreen(ST7735_BLACK);
   tft.setCursor(0, 5);
@@ -319,13 +321,18 @@ void displaySplashScreen(displayModeEnum displayMode) {
   tft.setCursor(20, 40);
   tft.print("Version ");
   tft.println(VERSION);
+  tft.setTextColor(ST7735_YELLOW);
+  maxLeghtOfTheme = min(themeField.length(), MAXTHEMELENGTH); // Limit characters
+  tft.setCursor((HALFTHEMELENGTH - (maxLeghtOfTheme / 2)) * LCDWIDTHOFFSET, 55);
+  tft.println(themeField);
   tft.setTextSize(2);
-  tft.println("");
+  tft.setCursor(0, 75);
   tft.setTextColor(ST7735_BLUE);
   tft.println("GK Grotsky");
-  tft.println("");
+  tft.setCursor(0, 100);
   tft.setTextColor(ST7735_GREEN);
   tft.println("Mode:");
+  tft.setCursor(0, 115);
   if (displayMode == NonTest) {
     tft.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
   }
@@ -399,10 +406,9 @@ void displayFileName(char *fileName, bool fileFound = true,
     tft.println("Test");
   }
   tft.setCursor(0, 15);
-  tft.println("Theme:");
   // Center the theme
   maxLeghtOfTheme = min(themeField.length(), MAXTHEMELENGTH); // Limit characters
-  tft.setCursor((HALFTHEMELENGTH - (maxLeghtOfTheme / 2)) * LCDWIDTHOFFSET, 25);
+  tft.setCursor((HALFTHEMELENGTH - (maxLeghtOfTheme / 2)) * LCDWIDTHOFFSET, 20);
   tft.println(themeField);
   tft.setTextSize(2);
   tft.setCursor(10, 50);
