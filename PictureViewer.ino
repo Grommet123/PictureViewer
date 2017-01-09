@@ -8,7 +8,7 @@
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
 
-Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
+Adafruit_ST7735 tft(TFT_CS, TFT_DC, TFT_RST);
 
 int numberOfFiles = 0;
 int pastMode = HIGH;
