@@ -3,6 +3,36 @@
     By GK Grotsky
     8/14/16
 
+Picture Viewer displays bitmap (bmp) files on a 1.8” TFT display.
+The files are read from a SD card. Both the TFT display and the SD card
+use the SPI protocol. The files can be displayed  randomly or sequentially.
+Note: The picture file names must have the format picxx.bmp, where xx is a number
+      from 1 to 99.
+      If you want a picture theme, add a text file named theme.txt containing
+      the theme up to 22 charactors.
+
+  https://github.com/Grommet123/PictureViewer
+
+  The MIT License (MIT)
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
 */
 #include "PictureViewer.h"
 #include <Adafruit_GFX.h>    // Core graphics library
@@ -356,7 +386,7 @@ void displaySplashScreen(displayModeEnum displayMode) {
 }
 
 // Displays the file name among other things
-void displayFileName(char *fileName, bool fileFound = true, 
+void displayFileName(char *fileName, bool fileFound = true,
                      int bmpWidth = 0, int bmpHeight = 0, int numberOfFiles = 99) {
   static long lastRandomNumber;
   long randomColor;
@@ -432,8 +462,6 @@ void displayFileName(char *fileName, bool fileFound = true,
     tft.print('H');
     tft.println(" Pixels");
   }
-  tft.setCursor(50, 150);
-  tft.println(colorType[randomColor]);
   delay(5000);
   tft.fillScreen(ST7735_BLACK);
 }
