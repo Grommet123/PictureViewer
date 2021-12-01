@@ -59,6 +59,7 @@ void setup(void) {
   Serial.println("Picture Viewer");
   Serial.print("Version ");
   Serial.println(VERSION);
+  Serial.println(CREDIT);
 
   // Initialize the SD card
   Serial.print("Initializing SD card...");
@@ -358,7 +359,7 @@ void displaySplashScreen(displayModeEnum displayMode) {
   tft.setTextSize(2);
   tft.setCursor(0, 75);
   tft.setTextColor(ST7735_BLUE);
-  tft.println("GK Grotsky");
+  tft.println(CREDIT);
   tft.setCursor(0, 100);
   tft.setTextColor(ST7735_GREEN);
   tft.println("Mode:");
