@@ -401,16 +401,6 @@ void displayFileName(char *fileName, bool fileFound = true,
     ST7735_WHITE
   };
 
-  char colorType [][8] = {
-    "Blue",
-    "Red",
-    "Green",
-    "Cyan",
-    "Magenta",
-    "Yellow",
-    "White"
-  };
-
   randomColor =  random(0, 7);
   // If random number repeats, try again
   while (randomColor == lastRandomNumber) {
