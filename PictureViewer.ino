@@ -52,7 +52,7 @@ void setup(void) {
 
   pinMode(TEST_PIN, INPUT);
   pinMode(MODE_PIN, INPUT);
-  Serial.begin(9600);
+  Serial.begin(115200);
   tft.initR(INITR_BLACKTAB);
 
   // Print program name and version
