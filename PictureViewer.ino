@@ -3,10 +3,10 @@
     By GK Grotsky
     8/14/16
 
-Picture Viewer displays bitmap (bmp) files on a 1.8” TFT display.
-The files are read from a SD card. Both the TFT display and the SD card
-use the SPI protocol. The files can be displayed  randomly or sequentially.
-Note: The picture file names must have the format picxx.bmp, where xx is a number
+  Picture Viewer displays bitmap (bmp) files on a 1.8” TFT display.
+  The files are read from a SD card. Both the TFT display and the SD card
+  use the SPI protocol. The files can be displayed  randomly or sequentially.
+  Note: The picture file names must have the format picxx.bmp, where xx is a number
       from 1 to 99.
       If you want a picture theme, add a text file named theme.txt containing
       the theme up to 22 charactors.
@@ -129,6 +129,9 @@ void setup(void) {
     pastTest = !(digitalRead(TEST_PIN));
   }
   pastMode = digitalRead(MODE_PIN);
+
+  pinMode(LED_BUILTIN, OUTPUT);   // Turn off on-board LED
+  digitalWrite(LED_BUILTIN, LOW); //         "
 }  // setup
 
 // The loop (runs forever and a day :-))
