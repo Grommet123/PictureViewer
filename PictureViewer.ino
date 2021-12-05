@@ -405,6 +405,16 @@ void displayFileName(char *fileName, bool fileFound = true,
     ST7735_WHITE
   };
 
+  char colorType [][8] = {
+    "Blue",
+    "Red",
+    "Green",
+    "Cyan",
+    "Magenta",
+    "Yellow",
+    "White"
+  };
+
   randomColor =  random(0, 7);
   // If random number repeats, try again
   while (randomColor == lastRandomNumber) {
@@ -455,6 +465,10 @@ void displayFileName(char *fileName, bool fileFound = true,
     tft.print(bmpHeight);
     tft.print('H');
     tft.println(" Pixels");
+  }
+  if (digitalRead(TEST_PIN)) {
+    tft.setCursor(50, 150);
+    tft.println(colorType[randomColor]);
   }
   delay(5000);
   tft.fillScreen(ST7735_BLACK);
