@@ -142,13 +142,17 @@ void loop() {
   char listNumberChar[] = "  ";
   static long lastRandomNumber = 0;
   static int fileNumber = 1;
+  static bool firstTime = true;
 
   if (digitalRead(TEST_PIN) == LOW) {  // Used for debugging
     // Check if the mode switch has changed
     if ((digitalRead(MODE_PIN) != pastMode) || (digitalRead(TEST_PIN) != pastTest)) {
-      Serial.print("Mode = ");
-      Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
-      Serial.println();
+      if (!firstTime) {
+        Serial.println();
+        Serial.print("Mode = ");
+        Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
+      }
+      firstTime = false;
       // Display splash screen
       displaySplashScreen();
       pastMode = digitalRead(MODE_PIN);
