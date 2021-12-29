@@ -102,14 +102,9 @@ void setup(void) {
     themeField = "??????";
   }
 
-  // Print # of files and mode
+  // Print # of files
   Serial.print("Number of files = ");
-  if ((digitalRead(TEST_PIN) == HIGH)) {
-    Serial.println('1');
-  }
-  else {
-    Serial.println(numberOfFiles);
-  }
+  Serial.println(numberOfFiles);
 
   tft.setRotation(0); // Portrait
 
