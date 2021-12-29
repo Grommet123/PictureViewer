@@ -140,6 +140,7 @@ void loop() {
   char fileName[] = "pic";
   char randomNumberChar[] = "  ";
   char listNumberChar[] = "  ";
+  char testChar[] = "  ";
   static long lastRandomNumber = 0;
   static int fileNumber = 1;
   static bool firstTime = true;
@@ -158,7 +159,7 @@ void loop() {
       pastMode = digitalRead(MODE_PIN);
       pastTest = digitalRead(TEST_PIN);
     }
-    // Check fo mode
+    // Check for mode
     if (digitalRead(MODE_PIN) == HIGH) {
       // Random was selected, get random number
       long randNumber = random(1, numberOfFiles + 1);
@@ -193,7 +194,10 @@ void loop() {
       fileNumber = 1;
       pastTest = digitalRead(TEST_PIN);
     }
-    if (bmpDraw(TESTPICTURE, 0, 0)) delay(DELAY_TIME);
+    sprintf(testChar, "%d", numberOfFiles); // Use the last file for the test file
+    strncat(fileName, testChar, 3);
+    strncat(fileName, ".bmp", 4);
+    if (bmpDraw(fileName, 0, 0)) delay(DELAY_TIME);
   }
 }  // loop
 
