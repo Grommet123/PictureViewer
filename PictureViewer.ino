@@ -38,7 +38,7 @@
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
 
-Adafruit_ST7735 tft(TFT_CS, TFT_DC, TFT_RST);
+Adafruit_ST7735 tft(TFT_CS, TFT_DC, TFT_RST); // TFT object
 
 int numberOfFiles = 0;
 int pastMode = HIGH;
@@ -108,9 +108,6 @@ void setup(void) {
 
   tft.setRotation(0); // Portrait
 
-  // Seed random number generator
-  randomSeed(analogRead(A0));
-
   if (digitalRead(TEST_PIN) == LOW) {
     Serial.print("Mode = ");
     Serial.println((digitalRead(MODE_PIN)) ? "Random" : "Sequential");
@@ -139,6 +136,9 @@ void loop() {
   static long lastRandomNumber = 0;
   static int fileNumber = 1;
   static bool firstTime = true;
+
+  // Seed random number generator
+  randomSeed(analogRead(A0));
 
   if (digitalRead(TEST_PIN) == LOW) {  // Used for debugging
     // Check if the mode switch has changed
