@@ -468,6 +468,8 @@ void displayFileName(char *fileName, bool fileFound = true,
     tft.print(bmpHeight);
     tft.print('H');
     tft.println(" Pixels");
+    tft.setCursor(30, 150);
+    tft.println(CREDIT);
   }
   if (digitalRead(TEST_PIN)) {
     tft.setCursor(50, 150);
