@@ -34,7 +34,7 @@ Note: The picture file names must have the format picxx.bmp, where xx is a numbe
  ** DC -   Pin 9
  ** CS -   Pin 10
 */
-#define VERSION  "7.3"        // Version number
+#define VERSION  "7.4"        // Version number
 #define TFT_CS  10            // Chip select line for TFT display
 #define TFT_DC   9            // Data/command line for TFT
 #define TFT_RST  8            // Reset line for TFT
