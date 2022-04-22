@@ -451,9 +451,10 @@ void displayFileName(char *fileName, bool fileFound = true,
   tft.setCursor(10, 50);
   tft.println(fileName);
   tft.setTextSize(1);
-  tft.setCursor(50, 70);
+  tft.setCursor(25, 70);
   tft.print("of ");
-  tft.println(numberOfFiles);
+  tft.print(numberOfFiles);
+  tft.println(" pics");
   if (!fileFound) {
     tft.setCursor(15, 110);
     tft.println("File not found");
